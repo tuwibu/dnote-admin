@@ -100,13 +100,13 @@ const PageView = () => {
     fetchInfo(password)
   }, [])
 
-  useEffect(() => {
-    if (ok) {
-      setInterval(() => {
-        fetchInfo(password)
-      }, 1000)
-    }
-  }, [ok])
+  // useEffect(() => {
+  //   if (ok) {
+  //     setInterval(() => {
+  //       fetchInfo(password)
+  //     }, 1000)
+  //   }
+  // }, [ok])
 
   return (
     <div className={styles.root}>
