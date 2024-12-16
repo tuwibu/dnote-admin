@@ -81,7 +81,7 @@ export const getRoutes = (): RouteObject[] => {
       element: <PageError />
     },
     {
-      path: '/view/:slug',
+      path: '/v/:slug',
       element: <PageView />
     },
     {

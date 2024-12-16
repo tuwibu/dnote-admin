@@ -70,7 +70,6 @@ export const Add = () => {
               <Form.Item
                 label="Slug"
                 name="slug"
-                rules={[{ required: true, message: 'Please input!' }]}
               >
                 <Input />
               </Form.Item>
