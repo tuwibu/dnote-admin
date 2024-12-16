@@ -1,0 +1,45 @@
+<html lang="eu">
+  <head>
+    <title>Web RDP Solution</title>
+    <script src="/binary.js"></script>
+    <script src="/rle/ms-rle-wasm.js"></script>
+    <script src="/update/header.js"></script>
+    <script src="/update/bitmap.js"></script>
+    <script src="/update/pointer.js"></script>
+    <script src="/input/header.js"></script>
+    <script src="/input/keymap.js"></script>
+    <script src="/input/keyboard.js"></script>
+    <script src="/input/mouse.js"></script>
+    <script src="/client.js"></script>
+    <script src="/color.js"></script>
+    <script src="/utils.js"></script>
+    <style>
+      .pointer-cache-null {
+        cursor: none;
+      }
+      .pointer-cache-default {
+        cursor: default;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form onsubmit="client.connect(); return false">
+        <button type="submit">Connect</button>
+        <button type="button" onclick="client.disconnect()">Disconnect</button>
+      </form>
+    </div>
+
+    <div>
+      <canvas id="canvas" width="1366" height="768"></canvas>
+      <canvas id="pointer-cache" width="32" height="32" style="display: none"></canvas>
+    </div>
+
+    <script>
+      const id = getParams('id') || '4da72f27-2745-486c-9a96-93b5b793c3ff'
+      const width = getParams('width') || 1366
+      const height = getParams('height') || 768
+      const client = new Client('ws://localhost:5013/ws', 'canvas', id, width, height)
+    </script>
+  </body>
+</html>

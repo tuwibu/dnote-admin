@@ -1,0 +1,62 @@
+// The color that will be at the beginning and the end of the loop.
+$firstColor: #0057b8;
+
+// The list of all the used colors. You can add or remove colors, the animation stays fluid. The $first-color must remain at the end of the list though.
+$listColors: #f11e4a, #237, #229c79, #f8a527, #266d7f, $firstColor;
+
+$delayCoeff: 0.04s;
+
+.svg {
+  display: inline-block;
+  height: 500px;
+  width: 500px;
+  line-height: 300px;
+  text-align: center;
+}
+
+#svg {
+  display: inline-block;
+  vertical-align: middle;
+  fill: $firstColor;
+
+  @for $i from 1 through 58 {
+    path:nth-child(#{$i}) {
+      -webkit-animation: pweek 5s linear infinite;
+      animation: pweek 5s linear infinite;
+      -webkit-animation-delay: $i * $delayCoeff;
+      animation-delay: $i * $delayCoeff;
+
+      &:hover {
+        -webkit-animation-play-state: paused;
+        /* Chrome, Safari, Opera */
+        animation-play-state: paused;
+      }
+    }
+  }
+}
+
+@mixin apply-color($i, $listColors) {
+  #{$i * calc(100% / length($listColors))} {
+    fill: nth($listColors, $i);
+  }
+}
+
+@-webkit-keyframes pweek {
+  0% {
+    fill: $firstColor;
+  }
+
+  @for $i from 1 through length($listColors) {
+    @include apply-color($i, $listColors);
+  }
+}
+
+@keyframes pweek {
+  0% {
+    fill: $firstColor;
+  }
+
+  @for $i from 1 through length($listColors) {
+    @include apply-color($i, $listColors);
+  }
+}
