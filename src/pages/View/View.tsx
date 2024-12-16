@@ -48,6 +48,7 @@ const PageView = () => {
   const [name, setName] = useState('')
   const [needPassword, setNeedPassword] = useState(false)
   const [blockNote, setBlockNote] = useState(false)
+  const [ok, setOk] = useState(false)
 
   const [form] = Form.useForm()
 
@@ -63,9 +64,11 @@ const PageView = () => {
           password
         })
       )
+      setOk(true)
     } catch (ex) {
       if (ex?.response?.status === 401) {
         setNeedPassword(true)
+        setOk(false)
         message.open({
           type: 'error',
           content: ex?.response?.data?.message || 'Password is incorrect'
@@ -73,6 +76,7 @@ const PageView = () => {
       }
       if (ex?.response?.status === 403) {
         setBlockNote(true)
+        setOk(false)
       }
     }
   }
@@ -95,6 +99,14 @@ const PageView = () => {
   useEffect(() => {
     fetchInfo(password)
   }, [])
+
+  useEffect(() => {
+    if (ok) {
+      setInterval(() => {
+        fetchInfo(password)
+      }, 1000)
+    }
+  }, [ok])
 
   return (
     <div className={styles.root}>
