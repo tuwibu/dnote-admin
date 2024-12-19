@@ -8,6 +8,9 @@ import { useAppDispatch, useAppSelector } from '@redux/hooks'
 import { setNotePassword } from '@redux/reducers/noteSlice'
 import { NoteState } from '@pages/Note/constant'
 import PageError from '@pages/Error/Error'
+import CodeMirror from '@uiw/react-codemirror'
+import { vscodeDark, vscodeLight } from '@uiw/codemirror-theme-vscode'
+import { isDarkMode } from '@redux/reducers/appSlice'
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +42,8 @@ const useStyles = makeStyles({
 })
 
 const PageView = () => {
+  const { themeMode } = useAppSelector((state) => state.app)
+  const darkMode = isDarkMode(themeMode)
   const styles = useStyles()
   const { slug } = useParams()
   const dispatch = useAppDispatch()
@@ -150,10 +155,16 @@ const PageView = () => {
                     <Input value={password} onChange={(e) => setPassword(e.target.value)} />
                   </Form.Item>
                   <Form.Item label="Content">
-                    <Input.TextArea
+                    <CodeMirror
+                      basicSetup={{
+                        lineNumbers: true,
+                        tabSize: 2
+                      }}
+                      height="500px"
+                      width="100%"
+                      theme={darkMode ? vscodeDark : vscodeLight}
                       value={content}
-                      autoSize={{ minRows: 20 }}
-                      onChange={(e) => setContent(e.target.value)}
+                      onChange={(value) => setContent(value)}
                     />
                   </Form.Item>
                   <Button type="primary" htmlType="submit">

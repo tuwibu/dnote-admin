@@ -5,8 +5,14 @@ import { ItemProps } from '@typings/datatable'
 import { Button, Col, Form, Input, Modal, Row, message } from 'antd'
 import React, { useState } from 'react'
 import { API, NoteState, TABLE_NAME } from '../constant'
+import { isDarkMode } from '@redux/reducers/appSlice'
+import { useAppSelector } from '@redux/hooks'
+import CodeMirror from '@uiw/react-codemirror'
+import { vscodeDark, vscodeLight } from '@uiw/codemirror-theme-vscode'
 
 const Edit: React.FC<ItemProps<NoteState>> = (props) => {
+  const { themeMode } = useAppSelector((state) => state.app)
+  const darkMode = isDarkMode(themeMode)
   const { item } = props
   const { reload } = useTable()
   const initialValues = {
@@ -87,12 +93,23 @@ const Edit: React.FC<ItemProps<NoteState>> = (props) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item
+          {/* <Form.Item
             label="Content"
             name="content"
             rules={[{ required: true, message: 'Please input!' }]}
           >
             <Input.TextArea autoSize={{ minRows: 20, maxRows: 20 }} />
+          </Form.Item> */}
+          <Form.Item label="Content" name="content" rules={[{ required: true, message: 'Please input!' }]}>
+            <CodeMirror
+              basicSetup={{
+                lineNumbers: true,
+                tabSize: 2
+              }}
+              height="500px"
+              width="100%"
+              theme={darkMode ? vscodeDark : vscodeLight}
+            />
           </Form.Item>
         </Form>
       </Modal>

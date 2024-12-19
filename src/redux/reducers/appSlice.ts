@@ -16,7 +16,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  themeMode: 'system',
+  themeMode: 'light',
   language: 'en'
 }
 
