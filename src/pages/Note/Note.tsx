@@ -57,7 +57,7 @@ const TableNote = () => {
       render: (value: string) => {
         return (
           <CopyToClipboard
-            text={`${APP_DOMAIN}/view/${value}`}
+            text={`${APP_DOMAIN}/v/${value}`}
             onCopy={() => {
               message.success('Copied!')
             }}
